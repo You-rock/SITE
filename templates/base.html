@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин ТВОЙ КОМПЬЮТЕР</title>
+
+    <link rel="stylesheet" href="/static/bootstrap.min.css" >
+    <script src="/static/jqery3_7_1.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+
+    <style>
+        body{
+            background: url("/static/bc-1.jpeg") center/cover no-repeat;
+        }
+
+        .bg-default{
+            background-color: rgba(0, 0, 0,0.8) !important;
+        }
+
+        .btn-top-menu{
+            padding: 10px;
+            margin-right: 5px;
+            background-color: aliceblue;
+            border: solid 1px;
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 15px !important;
+            color:rgba(0, 0, 0,0.8)
+        }
+        .btn-top-menu:hover{
+            font-weight: 800;
+        }
+
+        .top-menu-active{
+            background-color: blueviolet;
+            color: white;            
+        }
+    </style>
+</head>
+
+<body class="vh-100 container-fluid p-0 m-0 d-flex flex-column">
+    <nav class="navbar navbar-light bg-light px-5">
+        <a href="#" class="navbar-brand">
+            <img src="/static/logo.gif" width="100px" class="rounded me-3">
+            <b>Магазин ТВОЙ КОМПЬЮТЕР</b>
+        </a>
+        <button class="btn btn-success" type="submit">ВХОД\РЕГИСТРАЦИЯ</button>
+    </nav>
+
+    <nav class="container m-3">
+            {% for menu_item in menu%}
+                {%if menu_item.type == chapter %}
+                    <a href="/{{menu_item.type}}" class="btn-top-menu top-menu-active">{{menu_item.name}} </a>
+                {% else %} 
+                    <a href="/{{menu_item.type}}" class="btn-top-menu">{{menu_item.name}} </a>
+                {%endif%}
+            {%endfor%}
+    </nav>
+    
+    <main class="container bg-default rounded m-3 p-3 border border-2 h-100 text-white">
+        {% block info %}
+            <h1>Магазин ТВОЙ КОМПЬЮТЕР</h1>
+            <h2>Добро пожаловать</h2>
+        {% endblock info %}
+    </main>
+
+    <footer class="bg-white">
+        <div class="p-1 ms-3 pb-5">
+            <span class="text-dark">© 2023 YOU-ROCK Design studio, Inc</span>
+        </div>
+    </footer>
+</body>
+</html>
+
+
