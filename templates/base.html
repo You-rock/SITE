@@ -30,24 +30,93 @@
             color:rgba(0, 0, 0,0.8)
         }
         .btn-top-menu:hover{
-            font-weight: 800;
+            background-color:rgb(236, 229, 220) ;
+            color:rgba(0, 0, 0, 1)    
         }
 
         .top-menu-active{
-            background-color: blueviolet;
-            color: white;            
+            background-color: blueviolet !important;
+            color: white !important;
+        }
+
+        /* МОДАЛЬНОЕ ОКНО */
+        #userenter:checked ~ #top-user-modal label[for="userenter"],
+        #userregister:checked ~ #top-user-modal label[for="userregister"]
+        {
+            color: whitesmoke;
+            background-color:darkgrey !important;
+        }
+
+        #userenter:checked ~ .modal-body #userenter-form {
+            display: block !important;
+        }
+
+        #userregister:checked ~ .modal-body #userregister-form{
+            display: block !important;
         }
     </style>
 </head>
 
 <body class="vh-100 container-fluid p-0 m-0 d-flex flex-column">
     <nav class="navbar navbar-light bg-light px-5">
-        <a href="#" class="navbar-brand">
+        <a href="/" class="navbar-brand">
             <img src="/static/logo.gif" width="100px" class="rounded me-3">
             <b>Магазин ТВОЙ КОМПЬЮТЕР</b>
         </a>
-        <button class="btn btn-success" type="submit">ВХОД\РЕГИСТРАЦИЯ</button>
+        <button class="btn btn-success" type="button" 
+        data-bs-toggle="modal" data-bs-target="#register-modal">ВХОД\РЕГИСТРАЦИЯ</button>
     </nav>
+  
+  <!-- Модальное окно -->
+  <div class="modal fade" id="register-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <!-- //* Скрытые радиокнопочки -->
+            <input id="userenter" type="radio" name="radio" class="d-none" checked>
+            <input id="userregister" name="radio" type="radio" class="d-none">
+            <!--//* Заголовок -->
+            <nav class="modal-header p-0 pe-3" id="top-user-modal">
+                    <label for="userenter" class="border-right p-3">Войти в аккаунт</label>
+                    <label for="userregister" class="border-right p-3">Зарегистрироваться</label>
+                    <!-- //* Кнопочка закрытия -->
+                    <button class="btn-close" data-bs-dismiss="modal" ></button>
+            </nav>
+
+        <div class="modal-body">
+            <form id="userenter-form" class="d-none" method="post">
+                <label for = "login">Логин</label>
+                <input type = "text" name = "login" id = "login" class="form-control" required>
+
+                <label for = "password">Пароль</label>
+                <input type = "password" name = "password" id = "password" class="form-control" required>
+                
+                <hr>
+                
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </form>
+
+            <form id="userregister-form" class="d-none" method="post">
+                <label for = "r_login">Логин</label>
+                <input type = "text" name = "login" id = "r_login" class="form-control" required>
+
+                <label for = "email">email</label>
+                <input type = "email" name = "password" id = "email" class="form-control" required>
+
+
+                <label for = "password">Пароль</label>
+                <input type = "password" name = "password" id = "password" class="form-control">
+                
+                <hr>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 
     <nav class="container m-3">
             {% for menu_item in menu%}
@@ -58,7 +127,7 @@
                 {%endif%}
             {%endfor%}
     </nav>
-    
+
     <main class="container bg-default rounded m-3 p-3 border border-2 h-100 text-white">
         {% block info %}
             <h1>Магазин ТВОЙ КОМПЬЮТЕР</h1>

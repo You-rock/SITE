@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app=Flask(__name__)
 
@@ -7,8 +7,13 @@ menu = [{"name":"Видеокарты", "type":"videocard"}, {"name":"Матер
 
 types = [m['type'] for m in menu]
 
-@app.route("/")
+@app.route("/",methods=['post', 'get'])
 def base():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        print(username)
+        print(password)
     return render_template('index.html', menu = menu, chapter = "")
 
 @app.route("/<chapter>")
