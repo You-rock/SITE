@@ -63,58 +63,27 @@
             <img src="/static/logo.gif" width="100px" class="rounded me-3">
             <b>Магазин ТВОЙ КОМПЬЮТЕР</b>
         </a>
-        <button class="btn btn-success" type="button" 
-        data-bs-toggle="modal" data-bs-target="#register-modal">ВХОД\РЕГИСТРАЦИЯ</button>
+        {% if user.name !=""  %}
+            <div>
+                <div class = "d-inline-flex m-0 rounded-circle" 
+                    style="height: 2rem; width : 2rem; background-color: darkblue; ">
+                    <span class="m-auto text-center text-white" style = "line-height: 0; font-size: 20px;"> <b> {{user.name[0]}} </b></span>
+                </div>
+                <b ml-2 class="text-primary">  {{user.name}} </b>
+                <p class="mt-2"><a href="/exit">Выйти </a> </p>
+            </div>    
+        {% else %}
+            <button class="btn btn-success" type="button" 
+            data-bs-toggle="modal" data-bs-target="#register-modal">ВХОД\РЕГИСТРАЦИЯ</button>
+            {%block modal%}
+                {% include 'modal.html'%}
+            {%endblock modal %}
+        {% endif %}
     </nav>
-      
-  <!-- Модальное окно -->
-  <div class="modal fade" id="register-modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-            <!-- //* Скрытые радиокнопочки -->
-            <input id="userenter" type="radio" name="radio" class="d-none" checked>
-            <input id="userregister" name="radio" type="radio" class="d-none">
-            <!--//* Заголовок -->
-            <nav class="modal-header p-0 pe-3" id="top-user-modal">
-                    <label for="userenter" class="border-right p-3">Войти в аккаунт</label>
-                    <label for="userregister" class="border-right p-3">Зарегистрироваться</label>
-                    <!-- //* Кнопочка закрытия -->
-                    <button class="btn-close" data-bs-dismiss="modal" ></button>
-            </nav>
-
-        <div class="modal-body">
-            <form id="userenter-form" class="d-none" method="post">
-                <label for = "login">Логин</label>
-                <input type = "text" name = "login" id = "login" class="form-control" required>
-
-                <label for = "password">Пароль</label>
-                <input type = "password" name = "password" id = "password" class="form-control" required>
-                <hr>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="submit" class="btn btn-primary" name= "reg_status" value = "userenetr">Сохранить изменения</button>
-            </form>
-
-            <form id="userregister-form" class="d-none" method="post">
-                <label for = "r_login">Логин</label>
-                <input type = "text" name = "login" id = "r_login" class="form-control" required>
-
-                <label for = "fio">Имя и фамилия</label>
-                <input type = "text" name = "fio" id = "fio" class="form-control" required>
-
-
-                <label for = "password">Пароль</label>
-                <input type = "password" name = "password" id = "password" class="form-control">
-                
-                <hr>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="submit" class="btn btn-primary"  name= "reg_status" value = "userregister">Сохранить изменения</button>
-            </form>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
+    
+    {% if user.status !="" %}
+        <p class="p-2 bg-danger text-white">Ошибка авторизации: {{user.login}} {{user.status}}</p>
+    {%endif%}
 
     <nav class="container m-3">
             {% for menu_item in menu%}
