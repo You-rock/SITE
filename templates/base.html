@@ -66,7 +66,7 @@
         <button class="btn btn-success" type="button" 
         data-bs-toggle="modal" data-bs-target="#register-modal">ВХОД\РЕГИСТРАЦИЯ</button>
     </nav>
-  
+      
   <!-- Модальное окно -->
   <div class="modal fade" id="register-modal">
     <div class="modal-dialog">
@@ -89,19 +89,17 @@
 
                 <label for = "password">Пароль</label>
                 <input type = "password" name = "password" id = "password" class="form-control" required>
-                
                 <hr>
-                
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                <button type="submit" class="btn btn-primary" name= "reg_status" value = "userenetr">Сохранить изменения</button>
             </form>
 
             <form id="userregister-form" class="d-none" method="post">
                 <label for = "r_login">Логин</label>
                 <input type = "text" name = "login" id = "r_login" class="form-control" required>
 
-                <label for = "email">email</label>
-                <input type = "email" name = "password" id = "email" class="form-control" required>
+                <label for = "fio">Имя и фамилия</label>
+                <input type = "text" name = "fio" id = "fio" class="form-control" required>
 
 
                 <label for = "password">Пароль</label>
@@ -109,7 +107,7 @@
                 
                 <hr>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                <button type="submit" class="btn btn-primary"  name= "reg_status" value = "userregister">Сохранить изменения</button>
             </form>
 
         </div>
