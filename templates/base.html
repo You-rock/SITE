@@ -70,7 +70,10 @@
                     <span class="m-auto text-center text-white" style = "line-height: 0; font-size: 20px;"> <b> {{user.name[0]}} </b></span>
                 </div>
                 <b ml-2 class="text-primary">  {{user.name}} </b>
-                <p class="mt-2"><a href="/exit">Выйти </a> </p>
+                <p class="m-0 mt-1"><a href="/exit">Выйти </a> </p>
+                {% if user.login =="admin"  %}
+                    <p class="m-0 mt-1"><a href="/admin">Панель администратора </a> </p>
+                {%endif%}
             </div>    
         {% else %}
             <button class="btn btn-success" type="button" 
@@ -80,27 +83,30 @@
             {%endblock modal %}
         {% endif %}
     </nav>
-    
+    {%block main%}    
     {% if user.status !="" %}
         <p class="p-2 bg-danger text-white">Ошибка авторизации: {{user.login}} {{user.status}}</p>
     {%endif%}
+    {% if user.name != "" %}
+        <nav class="container m-3">
+                {% for menu_item in menu%}
+                    {%if menu_item.type == chapter %}
+                        <a href="/{{menu_item.type}}" class="btn-top-menu top-menu-active">{{menu_item.name}} </a>
+                    {% else %} 
+                        <a href="/{{menu_item.type}}" class="btn-top-menu">{{menu_item.name}} </a>
+                    {%endif%}
+                {%endfor%}
+        </nav>
+    {% endif %}
+    
 
-    <nav class="container m-3">
-            {% for menu_item in menu%}
-                {%if menu_item.type == chapter %}
-                    <a href="/{{menu_item.type}}" class="btn-top-menu top-menu-active">{{menu_item.name}} </a>
-                {% else %} 
-                    <a href="/{{menu_item.type}}" class="btn-top-menu">{{menu_item.name}} </a>
-                {%endif%}
-            {%endfor%}
-    </nav>
-
-    <main class="container bg-default rounded m-3 p-3 border border-2 h-100 text-white">
-        {% block info %}
-            <h1>Магазин ТВОЙ КОМПЬЮТЕР</h1>
-            <h2>Добро пожаловать</h2>
-        {% endblock info %}
-    </main>
+        <main class="container bg-default rounded m-3 p-3 border border-2 h-100 text-white">
+            {% block info %}
+                <h1>Магазин ТВОЙ КОМПЬЮТЕР</h1>
+                <h2>Добро пожаловать</h2>
+            {% endblock info %}
+        </main>
+    {%endblock main%}
 
     <footer class="bg-white">
         <div class="p-1 ms-3 pb-5">

@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import os
-
 class User:
     __instance = None
     __userdata = None
@@ -25,24 +24,31 @@ bd_path = os.path.split(__file__)[0]+'/magaz.db'
 
 con = sqlite3.connect(bd_path)
 cursor = con.cursor()
-cursor.execute("""
+cursor.execute('''
     CREATE TABLE IF NOT EXISTS users(
-    id INTEGER PRIMARY KEY,
+    users_id INTEGER PRIMARY KEY,
     fio TEXT DEFAULT "",
     login TEXT DEFAULT "",
     password TEXT DEFAULT "");
-"""
+'''
+)
+
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS tovar(
+    tovar_id INTEGER PRIMARY KEY,
+    name TEXT DEFAULT "",
+    category TEXT DEFAULT "",
+    price INT DEFAULT 0);
+'''
 )
 con.commit()
 con.close
-
 
 app=Flask(__name__)
 
 menu = [{"name":"Видеокарты", "type":"videocard"}, {"name":"Материнские платы", "type":"motherboard"},{"name":"Компьютеры в сборе", "type":"computers"}]
 
 types = [m['type'] for m in menu]
-
 
 @app.route("/",methods=['post', 'get'])
 def base():
@@ -79,14 +85,25 @@ def base():
         con.close()
     return render_template('index.html', menu = menu, chapter = "", user = user.userdata)
 
+@app.route("/admin", methods=['post', 'get'])
+def admin():
+    if request.method == 'POST':
+        btn_id = request.form.get('reg_status')
+        if btn_id == "userregister" or btn_id == "userenter":
+            pass
+
+    return render_template('add_tovar.html', user = user.userdata, menu = menu)
+
 @app.route("/exit")
 def exit():
     user.set_user(name="",login="",status="")
     return redirect(request.referrer)
 
 
-@app.route("/<chapter>")
+@app.route("/<chapter>", methods=['post', 'get'])
 def index(chapter):
+    if request.method == 'POST':
+                            pass
     if  chapter in types:
         name = [m['name'] for m in menu if m['type'] == chapter][0] 
         return render_template('info.html', menu = menu, chapter = chapter, name = name, user = user.userdata)
