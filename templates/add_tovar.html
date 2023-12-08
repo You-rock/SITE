@@ -4,22 +4,41 @@
 <main class="container bg-white my-3 rounded p-3 border border-2 h-100">
     {% if user.login == 'admin' %}
         <h1>Магазин ТВОЙ КОМПЬЮТЕР</h1>
-        <h2>Панель администратора</h2>
+        <h2>Панель администратора. Список товаров</h2>
 
-        <form action="" method="post">
-            <fieldset class="row">
-                <input type="text" class="form-control w-auto" name="name" id="name" placeholder="Наименование" />
+        <div class="row">
+            <div class="col-2 border border-3 border-bottom text-center text-primary">Категория</div>
+            <div class="col-2 border border-3 border-bottom text-center text-primary">Наименование</div>
+            <div class="col-2 border border-3 border-bottom text-center text-primary">Цена</div>
+            <div class="col-1 border border-3 border-bottom text-center text-primary">Действие</div>
+        </div>
 
-                <input type="number" name="price" id="price" required>
+        {%for tovar in tovars%}
+            <form class = "row">
+                <div class="col-2 border">{{tovar[3]}}</div>
+                <div class="col-2 border">{{tovar[1]}}</div>
+                <div class="col-2 border">{{tovar[4]}}</div>
+                <input type = hidden value = {{tovar[0]}}>                
+                <div class="col-1 border"><button type="submit" class="btn btn-danger">Удалить</div>
+            </form>
+        {%endfor%}
+        <hr>
+        <form clsass="mt-1" method="post">
+            <fieldset class="row justify-content-start" >
+                <label for="name" class="w-auto m-1">Наименование:</label>
+                <input type="text" class="form-control w-auto" name="name" id="name" required placeholder="Наименование" />
 
-                <label for="phone">Выберите категорию:</label>
-                <select id="category" name="category">
+                <label for="price" class="w-auto m-1">Цена:</label>
+                <input type="number" class="form-control w-auto" name="price" id="price" required placeholder="Цена">
+
+                <label for="category" class="w-auto m-1">Категория:</label>
+                <select id="category" class="form-select w-auto" name="category">
                     {%for menu_item in menu%}
                         <option value= '{{menu_item.type}}'>{{menu_item.name}}</option>
                     {%endfor%}
                 </select>
+                <button type="submit" class="btn btn-success w-auto ms-2" name =  "add_tovar_buton" value="addbuton">Принять</button>
             </fieldset>
-            <button type="submit" class="btn btn-success">Принять</button>
         </form>
     {% else%}
         <h1 class="text-danger">Этот раздел ТОЛЬКО для администратора!</h1>

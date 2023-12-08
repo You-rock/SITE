@@ -38,6 +38,7 @@ cursor.execute('''
     tovar_id INTEGER PRIMARY KEY,
     name TEXT DEFAULT "",
     category TEXT DEFAULT "",
+    category_name TEXT DEFAULT "",
     price INT DEFAULT 0);
 '''
 )
@@ -87,12 +88,32 @@ def base():
 
 @app.route("/admin", methods=['post', 'get'])
 def admin():
-    if request.method == 'POST':
-        btn_id = request.form.get('reg_status')
-        if btn_id == "userregister" or btn_id == "userenter":
-            pass
+    ####БД####
+    con = sqlite3.connect(bd_path)
+    cursor = con.cursor()
+    ##########
+    cursor.execute("SELECT * FROM tovar")
+    tovars = cursor.fetchall()
 
-    return render_template('add_tovar.html', user = user.userdata, menu = menu)
+    if request.method == 'POST':
+        # Получаем данные
+        cursor.execute("SELECT * FROM tovar ORDER BY category")
+        tovars = cursor.fetchall()
+        # Смотрим, какая нажата кнопка
+        btn_id = request.form.get('add_tovar_buton')
+        
+        if btn_id == "addbuton":
+                name=request.form.get("name")
+                price = request.form.get("price")
+                category = request.form.get("category")
+                category_n = [m['name'] for m in menu if m['type'] == category][0] 
+                cursor.execute("INSERT INTO tovar (name, price, category,category_name) VALUES (?,?,?,?)", (name, price, category, category_n))
+                # Заново читаем базу
+                cursor.execute("SELECT * FROM tovar ORDER BY category")
+                tovars = cursor.fetchall()
+        con.commit()
+        con.close()
+    return render_template('add_tovar.html', user = user.userdata, menu = menu, tovars=tovars)
 
 @app.route("/exit")
 def exit():
