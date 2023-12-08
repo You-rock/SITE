@@ -1,5 +1,23 @@
 {% extends 'base.html' %}
 
 {% block info %}
-<h1> {{name}} </h1>
+    <h1> {{name}} </h1>
+    {%for tovar in tovars%}
+    <div class = "row ps-3">
+        <div class="col-2 border"><p class="mt-4"> <b>{{tovar[3]}}</b></p></div>
+        <div class="col-2 border"><p class="mt-4"> <b>{{tovar[1]}}</b></p></div>
+        <div class="col-2 border"><p class="mt-4"> <b>{{tovar[4]}}</b></p></div>
+        <input type = hidden name="tovar_id" value = '{{tovar[0]}}'>                
+        <div class="col-1 border text-center"><button type="button" class="btn btn-danger m-1" title="Купить товар" name = "buy" value = "buybutton">
+            <img src="\static\E-Commerceee.jpg" width="50px" >
+        </div>
+    </div>
+    {%endfor%}
+
+    <script>
+        $("[name='buy']").click(function(){
+            alert("Уважаемый {{user.name}}! Это не интернет-магазин, а дипломная рабта, начинающего python-разработчика! Если вы хотите прирбрести компьютер, то идите на Алиэкспресс!")
+        })
+    </script>
+
 {% endblock info%}

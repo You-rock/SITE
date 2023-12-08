@@ -6,7 +6,7 @@
         <h1>Магазин ТВОЙ КОМПЬЮТЕР</h1>
         <h2>Панель администратора. Список товаров</h2>
 
-        <div class="row">
+        <div class="row ps-3">
             <div class="col-2 border border-3 border-bottom text-center text-primary">Категория</div>
             <div class="col-2 border border-3 border-bottom text-center text-primary">Наименование</div>
             <div class="col-2 border border-3 border-bottom text-center text-primary">Цена</div>
@@ -14,12 +14,12 @@
         </div>
 
         {%for tovar in tovars%}
-            <form class = "row">
+            <form class = "row ps-3" method="post">
                 <div class="col-2 border"><p class="mt-2"> <b>{{tovar[3]}}</b></p></div>
                 <div class="col-2 border"><p class="mt-2"> <b>{{tovar[1]}}</b></p></div>
                 <div class="col-2 border"><p class="mt-2"> <b>{{tovar[4]}}</b></p></div>
-                <input type = hidden value = {{tovar[0]}}>                
-                <div class="col-1 border text-center"><button type="submit" class="btn btn-danger m-1" title="Удалить товар">Х</div>
+                <input type = hidden name="tovar_id" value = '{{tovar[0]}}'>                
+                <div class="col-1 border text-center"><button type="submit" class="btn btn-danger m-1" title="Удалить товар" name = "del_tovar_buton" value = "delbutton">Х</div>
             </form>
         {%endfor%}
         <hr>

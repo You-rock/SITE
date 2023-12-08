@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Магазин ТВОЙ КОМПЬЮТЕР</title>
 
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+
+
     <link rel="stylesheet" href="/static/bootstrap.min.css" >
     <script src="/static/jqery3_7_1.js"></script>
     <script src="/static/bootstrap.min.js"></script>
@@ -84,26 +88,41 @@
         {% endif %}
     </nav>
     {%block main%}    
-    {% if user.status !="" %}
-        <p class="p-2 bg-danger text-white">Ошибка авторизации: {{user.login}} {{user.status}}</p>
-    {%endif%}
-    {% if user.name != "" %}
-        <nav class="container m-3">
-                {% for menu_item in menu%}
-                    {%if menu_item.type == chapter %}
-                        <a href="/{{menu_item.type}}" class="btn-top-menu top-menu-active">{{menu_item.name}} </a>
-                    {% else %} 
-                        <a href="/{{menu_item.type}}" class="btn-top-menu">{{menu_item.name}} </a>
-                    {%endif%}
-                {%endfor%}
-        </nav>
-    {% endif %}
+        {% if user.status !="" %}
+            <p class="p-2 bg-danger text-white">Ошибка авторизации: {{user.login}} {{user.status}}</p>
+        {%endif%}
+        {% if user.name != "" %}
+            <nav class="container m-3">
+                    {% for menu_item in menu%}
+                        {%if menu_item.type == chapter %}
+                            <a href="/{{menu_item.type}}" class="btn-top-menu top-menu-active">{{menu_item.name}} </a>
+                        {% else %} 
+                            <a href="/{{menu_item.type}}" class="btn-top-menu">{{menu_item.name}} </a>
+                        {%endif%}
+                    {%endfor%}
+            </nav>
+        {% endif %}
     
 
         <main class="container bg-default rounded m-3 p-3 border border-2 h-100 text-white">
             {% block info %}
                 <h1>Магазин ТВОЙ КОМПЬЮТЕР</h1>
                 <h2>Добро пожаловать</h2>
+                <hr>
+                <h4> Краткая инструкция: </h4> 
+                <p> Это демо-версия сайта нащего крутого интернет-магазина! <br>
+                    Для начала работы зарегистрируйтесь как покупатель, и выберите интересующую Вас категорию товаров! <br>
+                    Пользователю с логином 'admin' доступно добавление и удаление товаров и услуг.
+                </p>
+                <h4> На настоящее время доступны следующие категории товаров: </h4> 
+                <ol>
+                    {% for menu_item in menu%}
+                        <li>{{menu_item.name}} </li>
+                    {%endfor%}
+                </ol>
+                <hr>
+                <h4 class="text-danger text-center"> Приятных покупок! </h4> 
+
             {% endblock info %}
         </main>
     {%endblock main%}
