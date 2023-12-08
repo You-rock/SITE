@@ -15,11 +15,11 @@
 
         {%for tovar in tovars%}
             <form class = "row">
-                <div class="col-2 border">{{tovar[3]}}</div>
-                <div class="col-2 border">{{tovar[1]}}</div>
-                <div class="col-2 border">{{tovar[4]}}</div>
+                <div class="col-2 border"><p class="mt-2"> <b>{{tovar[3]}}</b></p></div>
+                <div class="col-2 border"><p class="mt-2"> <b>{{tovar[1]}}</b></p></div>
+                <div class="col-2 border"><p class="mt-2"> <b>{{tovar[4]}}</b></p></div>
                 <input type = hidden value = {{tovar[0]}}>                
-                <div class="col-1 border"><button type="submit" class="btn btn-danger">Удалить</div>
+                <div class="col-1 border text-center"><button type="submit" class="btn btn-danger m-1" title="Удалить товар">Х</div>
             </form>
         {%endfor%}
         <hr>
