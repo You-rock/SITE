@@ -127,7 +127,7 @@ def admin():
 @app.route("/exit")
 def exit():
     user.set_user(name="",login="",status="")
-    return redirect(request.referrer)
+    return redirect('/')
 
 
 @app.route("/<chapter>", methods=['post', 'get'])
