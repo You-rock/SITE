@@ -99,9 +99,9 @@ def admin():
         # Получаем данные
         cursor.execute("SELECT * FROM tovar ORDER BY category")
         tovars = cursor.fetchall()
+
         # Смотрим, какая нажата кнопка
         btn_id = request.form.get('add_tovar_buton')
-        
         if btn_id == "addbuton":
                 name=request.form.get("name")
                 price = request.form.get("price")
@@ -111,6 +111,15 @@ def admin():
                 # Заново читаем базу
                 cursor.execute("SELECT * FROM tovar ORDER BY category")
                 tovars = cursor.fetchall()
+        
+        
+        btn_id = request.form.get('del_tovar_buton')
+        if btn_id == "delbutton":
+            tovar_id=request.form.get("tovar_id")
+            cursor.execute("DELETE FROM tovar WHERE tovar_id=?",(tovar_id,))
+            # Заново читаем базу
+            cursor.execute("SELECT * FROM tovar ORDER BY category")
+            tovars = cursor.fetchall()        
         con.commit()
         con.close()
     return render_template('add_tovar.html', user = user.userdata, menu = menu, tovars=tovars)
@@ -118,17 +127,31 @@ def admin():
 @app.route("/exit")
 def exit():
     user.set_user(name="",login="",status="")
-    return redirect(request.referrer)
+    return redirect('/')
 
 
 @app.route("/<chapter>", methods=['post', 'get'])
 def index(chapter):
+        ####БД####
+    con = sqlite3.connect(bd_path)
+    cursor = con.cursor()
+
+    # Получаем данные
+    cursor.execute("SELECT * FROM tovar WHERE category = ? ORDER BY category",(chapter,))
+    tovars = cursor.fetchall()
+    
+    con.commit()
+    con.close()
+
     if request.method == 'POST':
                             pass
     if  chapter in types:
         name = [m['name'] for m in menu if m['type'] == chapter][0] 
-        return render_template('info.html', menu = menu, chapter = chapter, name = name, user = user.userdata)
+        return render_template('info.html', menu = menu, chapter = chapter, name = name, user = user.userdata, tovars = tovars)
     else:
         return render_template('404.html')
+
+
+
 if __name__ == "__main__":
     app.run(debug = True)
